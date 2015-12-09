@@ -9,8 +9,14 @@ var PostSchema = new Schema({
     created_at: { type: Date, default: Date.now() },
     updated_at: { type: Date },
     title: { type: String, required: true, trim: true },
-    content: { type: String, required: true, trim: true }
+    reason: { type: String, required: true, trim: true },
+    upvotes: { type: Number, default: 0 }
 });
+
+PostSchema.methods.upvote = function(cb) {
+  this.upvotes += 1;
+  this.save(cb);
+};
 
 // MIDDLEWARE
 PostSchema.pre('save', function(next){

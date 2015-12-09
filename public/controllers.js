@@ -16,12 +16,22 @@ angular.module('myApp.controllers', [])
 
     // CREATE A POST    
     $scope.createPost = function() {
+      // if(!$scope.title || $scope.title === '') { return; }
       var post = new Post($scope.post)
       post.$save(function(data) {
+        console.log(data)
         $scope.posts.unshift(data)
         $scope.post = {};
       })
     };
+
+    //ADD UPDATE ROUTE HERE TO EDIT POST AD CHANGE THE RATING???
+    $scope.incrementUpvotes = function(post) {
+         post.upvotes ++;
+         Post.update({ id: post._id }, post, function(data) {
+          console.log(data)
+         })
+       }; 
 
     // DELETE A POST
     $scope.deletePost = function(post, index) {
@@ -29,6 +39,7 @@ angular.module('myApp.controllers', [])
         $scope.posts.splice(index, 1);
       })
     };
+
   }])
 
   .controller('MusicSearch', function($http, $window, $scope) {

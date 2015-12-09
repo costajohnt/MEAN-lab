@@ -19,17 +19,18 @@
 <form ng-submit="createPost()">
   <div class='form-group'>
     <input class='form-control' type="text" ng-model="post.title" required autofocus>
-    <textarea class='form-control' ng-model="post.content" required ></textarea>
+    <textarea class='form-control' ng-model="post.reason" required ></textarea>
   </div>
   <button type="submit" class='btn btn-default'>Save</button>
 </form>
 <hr>
 <ul class='list-group'>
-  <li ng-repeat="post in posts" class='list-group-item'>
+  <li ng-repeat="post in posts | orderBy: '-upvotes'" class='list-group-item'>
     <h4>{{post.title}}</h4>
-    <p>{{post.content}}</p>
+    <p>{{post.reason}} - upvotes: {{post.upvotes}}</p>
     <a href="#" class='pull-right' ng-click="deletePost(post, $index)">
       <i class='icon ion-close-circled'></i>
     </a>
+    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)"></span>
   </li>
 </ul>

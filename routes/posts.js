@@ -15,9 +15,9 @@ module.exports = function(app) {
   app.post('/api/posts', function(req,res){  
    // var post = new Post({ content: req.body.content });
    // post.save(function (err, post) {
-    Post.create(req.body, function(err, post){
+    Post.create({ title: req.body.title, reason: req.body.reason, upvote: req.body.upvote}, function(err, post){
       if (err) { return res.send(err); }
-      console.log(post);
+      // console.log(post);
       res.status(201).send(post);
     });
   });
@@ -30,16 +30,19 @@ module.exports = function(app) {
   });
 
     // full update of one post by id
-  app.put('/api/posts/:post_id', function(req,res){ 
-    Post.findOneAndUpdate({ _id: req.params.post_id}, req.query.post, function (err, post) {
-      if (err) { return res.send(err); }
-      res.send(post);
-    });
-  })
 
-    // delete one post by id
+  app.put('/api/posts/:post_id', function(req,res){  
+    Post.findByIdAndUpdate(req.params.post_id, req.body, function (err, post) {
+      console.log(post);
+      if (err) { return res.send(err); }
+      res.status(200).send(post);
+    });
+  });
+
+  // delete one post by id
   app.delete('/api/posts/:post_id', function(req,res){   
     Post.findByIdAndRemove(req.params.post_id, function (err, post) {
+      console.log(post);
       if (err) { return res.send(err); }
       res.status(200).send('Success');
     });

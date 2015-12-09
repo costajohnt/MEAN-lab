@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');  // parse form data into req.body
 var mongoose = require('mongoose');   // object document mapper
 
 var request = require('request');
+require('./models/post');
 
 // configure bodyparser
 app.use(bodyParser.urlencoded({
@@ -56,19 +57,19 @@ app.get('/templates/:name', routes.templates);
 require('./routes/posts')(app);
 
 app.post('/api/music/search', function(req,res) {
-  console.log(req.body)
-  var url = "https://api.spotify.com/v1/search?q=" + req.body.term + "&type=track"
+  console.log(req.body);
+  var url = "https://api.spotify.com/v1/search?q=" + req.body.term + "&type=track";
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(body) // Show the HTML for the Google homepage. 
+      console.log(body); // Show the HTML for the Google homepage. 
     }
     res.send(body);
-  })
-})
+  });
+});
 
 app.get('/api/dudes', function(req,res) {
-  console.log("awesome sauce")
-})
+  console.log("awesome sauce");
+});
 
 // ALL OTHER ROUTES (ANGULAR HANDLES)
 // redirect all other paths to index
